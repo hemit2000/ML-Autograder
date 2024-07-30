@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>ML Autograder - Home</title>
+    <link rel="stylesheet" href="/css/styles.css">
+    <style>
+        /* Custom styles */
+        body {
+            font-family: Arial, sans-serif;
+            background-image: url('/css/images/display.jpg');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            display: flex; /* Use flexbox for centering body content */
+            justify-content: center; /* Center horizontally */
+            align-items: center; /* Center vertically */
+        }
+
+        .main-container {
+            display: flex; /* Use flexbox for layout */
+            justify-content: space-between; /* Space between heading and form */
+            align-items: center; /* Center items vertically */
+            padding: 20px;
+            max-width: 1200px;
+            width: 100%;
+            box-sizing: border-box; /* Include padding in width calculations */
+        }
+
+        .container1 {
+            flex: 1; /* Allow heading to take up space */
+            margin-right: 20px; /* Space between heading and form */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+
+        .container1 h1 {
+            font-family: 'Bold', Arial, sans-serif; /* Use a stylish font */
+            text-decoration: underline;
+            color: black; /* Color for the title text */
+            font-size: 50px; /* Larger font size */
+            margin: 0;
+            padding: 20px; /* Space inside the box around the text */
+            border: 4px solid darkblue; /* Border around the text */
+            background-color: rgba(220, 211, 210, 0.8); /* Semi-transparent white background */
+            border-radius: 10px; /* Rounded corners for the box */
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2); /* Subtle shadow for depth */
+        }
+
+        .container1 p {
+            font-size: 30px; /* Adjust font size for description */
+            color: black; /* Text color */
+            font-weight: bold; /* Make text bold */
+            margin: 10px 0 0; /* Space above the paragraph */
+            line-height: 1.5; /* Line height for readability */
+            border: 4px solid #030310; /* Border around the text */
+            background-color: rgb(255, 255, 255); /* Semi-transparent white background */
+            border-radius: 10px; /* Rounded corners for the box */
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2); /* Subtle shadow for depth */
+        }
+
+        .container2 {
+            background-color: rgba(255, 255, 255, 0.9); /* Semi-transparent white background */
+            padding: 20px;
+            border: 2px solid #ccc;
+            border-radius: 10px;
+            max-width: 490px;
+            width: 100%; /* Ensure full width within the container */
+            box-sizing: border-box; /* Include padding in width calculations */
+            flex: 1; /* Allow form to take up space */
+        }
+
+        .form-header {
+            text-align: center;
+            font-size: 24px;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+
+        .container3 {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .container3 p,
+        .container3 a {
+            color: black;
+            font-weight: bold;
+        }
+
+        .result {
+            color: green;
+            font-weight: bold;
+        }
+
+        .container2 label,
+        .container2 input,
+        .container2 textarea {
+            display: block;
+            width: 95%;
+            margin-bottom: 10px;
+        }
+
+        .container2 button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+            width: 100%;
+        }
+
+        .container2 button:hover {
+            background-color: #45a049;
+        }
+
+        .container3 a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+<div class="main-container">
+    <div class="container1">
+        <h1>Welcome to the Autograding Tool</h1>
+        <p>Get your score based on correctness, efficiency, and code style</p>
+    </div>
+
+    <div class="container2">
+         <div class="form-header">Get Your Score</div>
+        <form th:action="@{/api/feedback}" method="post">
+            <div>
+                <label for="instruction">Instruction:</label>
+                <textarea id="instruction" name="instruction" rows="3" required th:text="${instruction}"></textarea>
+            </div>
+            <div>
+                <label for="output">Output:</label>
+                <textarea id="output" name="output" rows="10" required th:text="${output}"></textarea>
+            </div>
+            <div>
+                <label for="code_style">Code Style:</label>
+                <input type="number" id="code_style" name="code_style" step="0.01" min="0" max="10" required th:value="${code_style}"/>
+            </div>
+            <div>
+                <button type="submit">Submit Feedback</button>
+            </div>
+        </form>
+        <div class="container3">
+            <div th:if="${response}">
+                <p class="result">Your Score : <span th:text="${response.predictedScore}"></span></p>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

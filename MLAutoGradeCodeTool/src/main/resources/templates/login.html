@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>ML Autograder - Login</title>
+    <link rel="stylesheet" href="/css/styles.css">
+    <style>
+        /* Custom styles */
+        body {
+            font-family: Arial, sans-serif;
+            background-image: url('/css/images/display.jpg');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+        }
+        .main-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px;
+            max-width: 1200px;
+            margin: 0 auto; /* Center the main container */
+            height: 100%;
+        }
+
+        .container1 {
+            flex: 1;
+            margin-right: 100px; /* Space between title and login box */
+        }
+
+        .container1 h1 {
+    font-family: 'Cursive', Arial, sans-serif; /* Use a stylish font */
+    text-decoration: underline;
+    color: black; /* Color for the title text */
+    font-size: 80px; /* Larger font size */
+    margin: 0;
+    padding: 20px; /* Space inside the box around the text */
+    border: 3px solid darkblue; /* Border around the text */
+    background-color: rgba(220, 211, 210, 0.8); /* Semi-transparent background */
+    border-radius: 10px; /* Rounded corners */
+    display: inline-block; /* Only as wide as the content */
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+}
+
+        .container2 {
+            background-color: rgba(255, 255, 255, 0.9); /* Semi-transparent white background */
+            padding: 20px;
+            border: 2px solid #ccc;
+            border-radius: 10px;
+            max-width: 600px;
+            flex: 1;
+        }
+        .login-header {
+            text-align: center;
+            font-size: 24px;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+        .container3 {
+            text-align: center;
+            margin-top: 20px;
+        }
+        .container3 p,
+        .container3 a {
+            color: black;
+            font-weight: bold;
+        }
+        .error {
+            color: red;
+        }
+        .container2 label,
+        .container2 input {
+            display: block;
+            width: 95%;
+            margin-bottom: 10px;
+        }
+        .container2 button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+            width: 100%;
+        }
+        .container2 button:hover {
+            background-color: #45a049;
+        }
+        .container3 a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="main-container">
+        <div class="container1">
+            <h1>𝓐𝓾𝓽𝓸𝓰𝓻𝓪𝓭𝓮𝓻</h1>
+        </div>
+
+        <div class="container2">
+            <div class="login-header">Login</div>
+            <form th:action="@{/loginReq}" th:object="${jwtRequest}" method="post">
+                <div>
+                    <label for="username">Username:</label>
+                    <input type="text" id="username" name="username" th:field="*{username}" required/>
+                </div>
+                <div>
+                    <label for="password">Password:</label>
+                    <input type="password" id="password" name="password" th:field="*{password}" required/>
+                </div>
+                <div>
+                    <button type="submit">Login</button>
+                </div>
+            </form>
+            <div class="container3">
+                <p th:if="${error}" th:text="${error}" class="error"></p>
+                <a href="/signup">Don't have an account? Sign up here</a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
